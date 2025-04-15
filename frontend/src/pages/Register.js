@@ -1,38 +1,44 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function Register() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showOTP, setShowOTP] = useState(false);
-  const [otp, setOTP] = useState('');
+  const [otp, setOTP] = useState("");
   const { register, verifyEmail, resendOTP } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setError('');
+      setError("");
 
       if (password !== confirmPassword) {
-        return setError('Passwords do not match');
+        return setError("Passwords do not match");
       }
 
-      if (!email.endsWith('@vitstudent.ac.in')) {
-        return setError('Please use your VIT student email address (name.lastnameYYYY@vitstudent.ac.in)');
+      if (!email.endsWith("@vitstudent.ac.in")) {
+        return setError(
+          "Please use your VIT student email address (name.lastnameYYYY@vitstudent.ac.in)"
+        );
       }
 
       setLoading(true);
+
+      console.log("here");
+
       const response = await register(name, email, password);
+      console.log(response.data);
       alert(`Your OTP is: ${response.otp}`);
       setShowOTP(true);
     } catch (error) {
-      setError(error.message || 'Failed to create an account');
+      setError(error.message || "Failed to create an account");
     } finally {
       setLoading(false);
     }
@@ -41,12 +47,12 @@ export default function Register() {
   const handleVerifyOTP = async (e) => {
     e.preventDefault();
     try {
-      setError('');
+      setError("");
       setLoading(true);
       await verifyEmail(email, otp);
-      navigate('/');
+      navigate("/");
     } catch (error) {
-      setError(error.message || 'Failed to verify email');
+      setError(error.message || "Failed to verify email");
     } finally {
       setLoading(false);
     }
@@ -54,12 +60,12 @@ export default function Register() {
 
   const handleResendOTP = async () => {
     try {
-      setError('');
+      setError("");
       setLoading(true);
       const response = await resendOTP(email);
       alert(`Your new OTP is: ${response.otp}`);
     } catch (error) {
-      setError(error.message || 'Failed to resend OTP');
+      setError(error.message || "Failed to resend OTP");
     } finally {
       setLoading(false);
     }
@@ -116,7 +122,7 @@ export default function Register() {
                 disabled={loading}
                 className="btn btn-primary w-full"
               >
-                {loading ? 'Verifying...' : 'Verify Email'}
+                {loading ? "Verifying..." : "Verify Email"}
               </button>
             </div>
           </form>
@@ -133,7 +139,7 @@ export default function Register() {
             Create your account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-400">
-            Or{' '}
+            Or{" "}
             <Link
               to="/login"
               className="font-medium text-primary-500 hover:text-primary-400"
@@ -217,11 +223,11 @@ export default function Register() {
               disabled={loading}
               className="btn btn-primary w-full"
             >
-              {loading ? 'Creating account...' : 'Create account'}
+              {loading ? "Creating account..." : "Create account"}
             </button>
           </div>
         </form>
       </div>
     </div>
   );
-} 
+}

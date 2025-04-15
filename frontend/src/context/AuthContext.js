@@ -49,6 +49,7 @@ export function AuthProvider({ children }) {
         password,
       }
     );
+    console.log(response);
     return response.data;
   };
 
