@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 function Questions() {
   const [questions, setQuestions] = useState([]);
@@ -10,11 +10,13 @@ function Questions() {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/questions');
+        const response = await axios.get(
+          "https://swe2-1.onrender.com/api/questions"
+        );
         setQuestions(response.data);
         setLoading(false);
       } catch (err) {
-        setError('Failed to fetch questions');
+        setError("Failed to fetch questions");
         setLoading(false);
       }
     };
@@ -49,4 +51,4 @@ function Questions() {
   );
 }
 
-export default Questions; 
+export default Questions;

@@ -16,7 +16,9 @@ const Home = () => {
 
   const fetchQuestions = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/questions");
+      const response = await axios.get(
+        "https://swe2-1.onrender.com/api/questions"
+      );
       setQuestions(response.data);
     } catch (error) {
       setError("Failed to fetch questions");
@@ -40,7 +42,7 @@ const Home = () => {
       }
 
       const response = await axios.post(
-        `http://localhost:5000/api/questions/${questionId}/vote`,
+        `https://swe2-1.onrender.com/api/questions/${questionId}/vote`,
         { voteType },
         {
           headers: {
@@ -105,7 +107,8 @@ const Home = () => {
               <button
                 className="google-signin-button"
                 onClick={() =>
-                  (window.location.href = "http://localhost:5000/auth/google")
+                  (window.location.href =
+                    "https://swe2-1.onrender.com/auth/google")
                 }
               >
                 Sign in with Google

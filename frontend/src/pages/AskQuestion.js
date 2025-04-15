@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import axios from 'axios';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import axios from "axios";
 
 export default function AskQuestion() {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
   const [tags, setTags] = useState([]);
-  const [tagInput, setTagInput] = useState('');
-  const [error, setError] = useState('');
+  const [tagInput, setTagInput] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -17,22 +17,22 @@ export default function AskQuestion() {
     e.preventDefault();
     try {
       if (!user) {
-        setError('Please log in to ask a question');
+        setError("Please log in to ask a question");
         return;
       }
 
-      setError('');
+      setError("");
       setLoading(true);
 
-      await axios.post('http://localhost:5000/api/questions', {
+      await axios.post("https://swe2-1.onrender.com/api/questions", {
         title,
         content,
-        tags
+        tags,
       });
 
-      navigate('/');
+      navigate("/");
     } catch (error) {
-      setError(error.response?.data?.message || 'Failed to post question');
+      setError(error.response?.data?.message || "Failed to post question");
     } finally {
       setLoading(false);
     }
@@ -42,12 +42,12 @@ export default function AskQuestion() {
     e.preventDefault();
     if (tagInput.trim() && !tags.includes(tagInput.trim())) {
       setTags([...tags, tagInput.trim()]);
-      setTagInput('');
+      setTagInput("");
     }
   };
 
   const handleRemoveTag = (tagToRemove) => {
-    setTags(tags.filter(tag => tag !== tagToRemove));
+    setTags(tags.filter((tag) => tag !== tagToRemove));
   };
 
   return (
@@ -63,7 +63,10 @@ export default function AskQuestion() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="title" className="block text-sm font-medium text-gray-300">
+            <label
+              htmlFor="title"
+              className="block text-sm font-medium text-gray-300"
+            >
               Title
             </label>
             <input
@@ -78,7 +81,10 @@ export default function AskQuestion() {
           </div>
 
           <div>
-            <label htmlFor="content" className="block text-sm font-medium text-gray-300">
+            <label
+              htmlFor="content"
+              className="block text-sm font-medium text-gray-300"
+            >
               Content
             </label>
             <textarea
@@ -93,7 +99,10 @@ export default function AskQuestion() {
           </div>
 
           <div>
-            <label htmlFor="tags" className="block text-sm font-medium text-gray-300">
+            <label
+              htmlFor="tags"
+              className="block text-sm font-medium text-gray-300"
+            >
               Tags
             </label>
             <div className="mt-1 flex flex-wrap gap-2 mb-2">
@@ -121,7 +130,7 @@ export default function AskQuestion() {
                 onChange={(e) => setTagInput(e.target.value)}
                 className="input rounded-r-none"
                 placeholder="Add tags..."
-                onKeyPress={(e) => e.key === 'Enter' && handleAddTag(e)}
+                onKeyPress={(e) => e.key === "Enter" && handleAddTag(e)}
               />
               <button
                 type="button"
@@ -139,11 +148,11 @@ export default function AskQuestion() {
               disabled={loading}
               className="btn btn-primary w-full"
             >
-              {loading ? 'Posting...' : 'Post Question'}
+              {loading ? "Posting..." : "Post Question"}
             </button>
           </div>
         </form>
       </div>
     </div>
   );
-} 
+}

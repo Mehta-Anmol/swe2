@@ -19,8 +19,8 @@ export default function QuestionDetail() {
       try {
         console.log("Fetching question with ID:", id);
         const [questionResponse, answersResponse] = await Promise.all([
-          axios.get(`http://localhost:5000/api/questions/${id}`),
-          axios.get(`http://localhost:5000/api/answers/question/${id}`),
+          axios.get(`https://swe2-1.onrender.com/api/questions/${id}`),
+          axios.get(`https://swe2-1.onrender.com/api/answers/question/${id}`),
         ]);
         console.log("Question data:", questionResponse.data);
         console.log("Answers data:", answersResponse.data);
@@ -61,7 +61,7 @@ export default function QuestionDetail() {
 
       const endpoint = type === "question" ? "questions" : "answers";
       const response = await axios.post(
-        `http://localhost:5000/api/${endpoint}/${itemId}/vote`,
+        `https://swe2-1.onrender.com/api/${endpoint}/${itemId}/vote`,
         { voteType },
         {
           headers: {
@@ -105,10 +105,13 @@ export default function QuestionDetail() {
         return;
       }
 
-      const response = await axios.post("http://localhost:5000/api/answers", {
-        content: newAnswer,
-        questionId: id,
-      });
+      const response = await axios.post(
+        "https://swe2-1.onrender.com/api/answers",
+        {
+          content: newAnswer,
+          questionId: id,
+        }
+      );
 
       // Add the new answer to the list
       setAnswers([response.data, ...answers]);
@@ -135,7 +138,7 @@ export default function QuestionDetail() {
 
       const endpoint = type === "question" ? "questions" : "answers";
       await axios.post(
-        `http://localhost:5000/api/${endpoint}/${itemId}/comments`,
+        `https://swe2-1.onrender.com/api/${endpoint}/${itemId}/comments`,
         {
           content: newComment,
         }
@@ -143,8 +146,8 @@ export default function QuestionDetail() {
 
       // Refresh the data
       const [questionResponse, answersResponse] = await Promise.all([
-        axios.get(`http://localhost:5000/api/questions/${id}`),
-        axios.get(`http://localhost:5000/api/answers/question/${id}`),
+        axios.get(`https://swe2-1.onrender.com/api/questions/${id}`),
+        axios.get(`https://swe2-1.onrender.com/api/answers/question/${id}`),
       ]);
       setQuestion(questionResponse.data);
       setAnswers(answersResponse.data);

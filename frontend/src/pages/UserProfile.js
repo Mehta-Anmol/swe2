@@ -13,8 +13,8 @@ export default function UserProfile() {
     const fetchUserData = async () => {
       try {
         const [userResponse, statsResponse] = await Promise.all([
-          axios.get(`http://localhost:5000/api/users/${id}`),
-          axios.get(`http://localhost:5000/api/users/${id}/stats`),
+          axios.get(`https://swe2-1.onrender.com/api/users/${id}`),
+          axios.get(`https://swe2-1.onrender.com/api/users/${id}/stats`),
         ]);
         setUser(userResponse.data);
         setStats(statsResponse.data);
